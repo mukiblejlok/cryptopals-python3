@@ -1,8 +1,8 @@
 import base64
 
 from S01 import (
-    xor_bytes, xor_bytes_with_char, evaluate_text, repeating_xor, transpose_bytes,
-    best_char_for_bytes, get_key_length_normalized_distances
+    xor_bytes, xor_bytes_with_char, xor_bytes_with_repeating_key, evaluate_text, transpose_bytes,
+    find_best_char_for_bytes, get_key_length_normalized_distances
 )
 
 
@@ -30,7 +30,7 @@ def challenge_2():
 def challenge_3():
     hex_input_string = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
     input_bytes = bytearray.fromhex(hex_input_string)
-    best_char, score = best_char_for_bytes(input_bytes=input_bytes)
+    best_char, score = find_best_char_for_bytes(input_bytes=input_bytes)
     output_bytes = xor_bytes_with_char(input_bytes, best_char)
     print(f"Challenge 3 - {output_bytes} | (Char: {best_char}, Score: {score:3f})")
 
@@ -44,7 +44,7 @@ def challenge_4():
     output_bytes = None
     for i, line in enumerate(lines_to_test):
         input_bytes = bytearray.fromhex(line)
-        char, score = best_char_for_bytes(input_bytes)
+        char, score = find_best_char_for_bytes(input_bytes)
         if score < best_score:
             best_char = char
             best_score = score
@@ -58,7 +58,7 @@ def challenge_5():
     key = b"ICE"
     expected_hex_string = ("0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272"
                            "a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f")
-    output_bytes = repeating_xor(input_bytes1, key)
+    output_bytes = xor_bytes_with_repeating_key(input_bytes1, key)
     assert output_bytes.hex() == expected_hex_string
     print("Challenge 5 - OK")
 
@@ -80,10 +80,10 @@ def challenge_6():
         total_score = 0.0
         estimated_key = ""
         for b in list_of_bytes:
-            char, score = best_char_for_bytes(b)
+            char, score = find_best_char_for_bytes(b)
             estimated_key += char
         estimated_key = estimated_key.encode()
-        output_text = repeating_xor(input_bytes, estimated_key).decode()
+        output_text = xor_bytes_with_repeating_key(input_bytes, estimated_key).decode()
         text_score = evaluate_text(output_text)
 
         if text_score < best_score:

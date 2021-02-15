@@ -42,13 +42,13 @@ def evaluate_text(text: str, frq_dict: Dict = None) -> float:
     return score / text_length
 
 
-def repeating_xor(input_bytes, key):
+def xor_bytes_with_repeating_key(input_bytes: bytes, key: bytes) -> bytes:
     repeats = len(input_bytes) // len(key) + 1
     repeating_key = bytearray(key) * repeats
     return xor_bytes(input_bytes, repeating_key)
 
 
-def hamming_distance(bytes1, bytes2) -> int:
+def hamming_distance(bytes1: bytes, bytes2: bytes) -> int:
     assert len(bytes1) == len(bytes2)
     result = xor_bytes(bytes1, bytes2)
     result_as_int = int(result.hex(), 16)
@@ -64,7 +64,7 @@ def transpose_bytes(input_bytes: bytes, key_length: int) -> List[bytes]:
     return list_of_transposed_bytes
 
 
-def best_char_for_bytes(input_bytes, chars=string.printable):
+def find_best_char_for_bytes(input_bytes: bytes, chars: Sequence[str] = string.printable):
     best_score = float("inf")
     code_char = None
     for char in chars:
