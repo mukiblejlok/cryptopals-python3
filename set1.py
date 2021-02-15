@@ -1,8 +1,7 @@
 import base64
-from itertools import combinations
 
 from S01 import (
-    xor_bytes, xor_bytes_with_char, evaluate_text, repeating_xor, hamming_distance, transpose_bytes,
+    xor_bytes, xor_bytes_with_char, evaluate_text, repeating_xor, transpose_bytes,
     best_char_for_bytes, get_key_length_normalized_distances
 )
 

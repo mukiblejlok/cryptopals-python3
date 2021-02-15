@@ -81,7 +81,7 @@ def best_char_for_bytes(input_bytes, chars=string.printable):
 
 def get_key_length_normalized_distances(input_bytes: bytes, test_cases: Sequence[int]) -> List[Tuple[int, float]]:
     keys = []
-    for key_size in range(2, 42):
+    for key_size in test_cases:
         chunks = [input_bytes[i * key_size:(i + 1) * key_size] for i in range(4)]
         # print(chunks)
         distance = 0
