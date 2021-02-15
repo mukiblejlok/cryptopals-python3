@@ -91,6 +91,7 @@ def get_key_length_normalized_distances(input_bytes: bytes, test_cases: Sequence
         keys.append((key_size, distance))
     return keys
 
+
 if __name__ == '__main__':
     texts = (
         "Cooking MC's like a pound of bacon",
